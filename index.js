@@ -37,10 +37,10 @@ app.use(express.json());
 //cuando se reciba un endpoint api/auth se reenviará a routes/auth
 app.use('/api/auth', require('./routes/auth'));
 
+//manejar rutas para frontend
 
 //le asignamos el puerto:
 app.listen(process.env.PORT, () => {
     console.log(`Server on port ${process.env.PORT}`);
 })
 
-console.log("hola de nuevo");

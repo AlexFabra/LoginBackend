@@ -8,13 +8,7 @@ const crearUsuario = async (req, res = response) => {
 
     const { name, email, password } = req.body;
 
-    //verificar el email:
-
-    //hash password:
-
-    //generar jwt 
-
-    //generar respuesta exitosa
+    //TODO: verificar el email, hash password, generar jwt, generar respuesta exitosa
 
     try {
 
@@ -42,6 +36,7 @@ const crearUsuario = async (req, res = response) => {
             ok: true,
             uid: dbUser.id,
             name,
+            email,
             token
         });
 
@@ -85,6 +80,7 @@ const login = async (req, res = response) => {
             ok: true,
             uid: dbUser.id,
             name: dbUser.name,
+            email: dbUser.email,
             token
         })
 
@@ -100,17 +96,21 @@ const login = async (req, res = response) => {
 
 const renew = async (req, res) => {
 
-    const { uid, name } = req;
+    const { uid } = req;
+
+    //per obtenir el mail i el nom, llegim la bdd:
+    const dbUser = await Usuario.findById(uid);
 
     //generar jwt:
-    const newToken = await generarJWT(uid, name);
+    const token = await generarJWT(uid, dbUser.name);
 
     return res.json({
         ok: true,
         mensaje: 'renovar usuario /renew',
         uid,
-        name,
-        newToken
+        name: dbUser.name,
+        email: dbUser.email,
+        token
     })
 }
 
